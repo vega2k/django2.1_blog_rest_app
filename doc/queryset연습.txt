@@ -1,0 +1,89 @@
+ [1]: from blog.models import Post
+
+ [2]: Post.objects.all()
+t[2]: <QuerySet [<Post: 첫번째 글 제목>]>
+
+ [3]: Post.objects.all()
+t[3]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>, <Post:
+이틀>, <Post: 장고유저의 타이틀 두번째>]>
+
+ [5]: from django.contrib.auth.models import User
+
+ [7]: user_1 = User.objects.get(username='admin')
+
+ [8]: user_1
+t[8]: <User: admin>
+
+ [9]: user_2 = User.objects.get(username='django')
+
+ [10]: user_2
+t[10]: <User: django>
+
+ [11]: Post.objects.filter(author=user_1)
+t[11]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>]>
+
+ [12]: Post.objects.filter(author=user_2)
+t[12]: <QuerySet [<Post: 장고유저의 타이틀>, <Post: 장고유저의 타이
+
+ [14]: Post.objects.get(title='첫번째 글 제목')
+t[14]: <Post: 첫번째 글 제목>
+
+ [15]: Post.objects.get(id=1)
+t[15]: <Post: 첫번째 글 제목>
+
+ [16]: Post.objects.create(author=user_1,title='sample title',text=
+  ...: sample Text')
+t[16]: <Post: sample title>
+
+ [17]: Post.objects.all()
+t[17]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>, <Post:
+타이틀>, <Post: 장고유저의 타이틀 두번째>, <Post: sample title>]>
+
+ [18]: Post.objects.filter(author=user_1)
+t[18]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>, <Post:
+>]>
+
+ [19]: Post.objects.filter(title__contains='번째')
+t[19]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>, <Post:
+타이틀 두번째>]>
+
+ [20]: from django.utils import timezone
+
+ [21]: timezone.now()
+t[21]: datetime.datetime(2018, 11, 22, 5, 49, 18, 413806, tzinfo=<U
+
+ [22]: Post.objects.filter(published_date__lte=timezone.now())
+t[22]: <QuerySet [<Post: 두번째 글>, <Post: 장고유저의 타이틀>]>
+
+In [2]: post = Post.objects.get(title='첫번째 글 제목')
+
+In [3]: post
+Out[3]: <Post: 첫번째 글 제목>
+
+In [4]: post.id
+Out[4]: 1
+
+In [5]: post.title
+Out[5]: '첫번째 글 제목'
+
+In [6]: post.published_date
+
+In [8]: post.publish()
+
+In [9]: post.published_date
+Out[9]: datetime.datetime(2018, 11, 22, 5, 57, 36, 505007, tzinfo=<UT
+
+In [10]: from django.utils import timezone
+
+In [11]: Post.objects.filter(published_date__lte=timezone.now())
+Out[11]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 두번째 글>, <Post: 타이틀>]>
+
+In [12]: Post.objects.filter(published_date__lte=timezone.now()).orde
+    ...: _by('published_date')
+Out[12]: <QuerySet [<Post: 두번째 글>, <Post: 장고유저의 타이틀>, <Po
+글 제목>]>
+
+In [13]: Post.objects.filter(published_date__lte=timezone.now()).orde
+    ...: _by('-published_date')
+Out[13]: <QuerySet [<Post: 첫번째 글 제목>, <Post: 장고유저의 타이틀>
+번째 글>]>
